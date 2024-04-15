@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.SocialApp.SimpleSocialApp.entities.Post;
 import com.SocialApp.SimpleSocialApp.services.PostService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/post")
 public class PostController {
@@ -39,9 +41,8 @@ public class PostController {
         return ResponseEntity.notFound().build();
     }
 
-
     @PostMapping("/create")
-    public ResponseEntity<Post> Create(@RequestBody Post post){
+    public ResponseEntity<Post> Create(@Valid @RequestBody Post post){
         return ResponseEntity.status(HttpStatus.CREATED).body(postService.Create(post));
     }
 }

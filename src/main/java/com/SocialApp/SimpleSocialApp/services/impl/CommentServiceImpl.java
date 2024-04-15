@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.SocialApp.SimpleSocialApp.entities.Comments;
+import com.SocialApp.SimpleSocialApp.entities.Post;
 import com.SocialApp.SimpleSocialApp.repositories.CommentsRepository;
 import com.SocialApp.SimpleSocialApp.repositories.PostRepository;
 import com.SocialApp.SimpleSocialApp.services.CommentService;
@@ -21,7 +22,7 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comments Create(Comments comments, Long postId) {
 
-        var post = postRepository.findById(postId).get();
+        Post post = postRepository.findById(postId).orElseThrow();
 
         Comments comment = new Comments();
         comment.setPost(post);

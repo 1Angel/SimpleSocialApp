@@ -1,10 +1,14 @@
 package com.SocialApp.SimpleSocialApp.entities;
 
 import java.util.Date;
-import java.util.List;
+
+import java.util.Set;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,13 +32,16 @@ public class Post {
     @Column(length = 1000)
     private String description;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Comments> comments;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"post"})
+    private Set<Comments> comments;
 
     @CreatedDate
     private Date createdAt;
 
-    public Post(Long id, String title, String description, List<Comments> comments, Date createdAt) {
+
+    
+    public Post(Long id, String title, String description, Set<Comments> comments, Date createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -69,11 +76,11 @@ public class Post {
         this.description = description;
     }
 
-    public List<Comments> getComments() {
+    public Set<Comments> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comments> comments) {
+    public void setComments(Set<Comments> comments) {
         this.comments = comments;
     }
 
@@ -84,6 +91,8 @@ public class Post {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+
 
 
 }
