@@ -2,6 +2,7 @@ package com.SocialApp.SimpleSocialApp.entities;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -25,7 +26,7 @@ public class User {
 
     private String password;
 
-    private List<Roles> roles;
+    private Set<Roles> roles;
 
     @CreationTimestamp
     private Date createdDate;
@@ -33,7 +34,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String email, String password, List<Roles> roles, Date createdDate) {
+    public User(Long id, String username, String email, String password, Set<Roles> roles, Date createdDate) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -74,11 +75,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Roles> getRoles() {
+    public Set<Roles> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<Roles> roles) {
+    public void setRoles(Set<Roles> roles) {
         this.roles = roles;
     }
 
@@ -89,6 +90,7 @@ public class User {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
-    
+
+
 
 }
