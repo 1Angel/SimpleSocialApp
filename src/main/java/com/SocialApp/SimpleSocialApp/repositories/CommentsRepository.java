@@ -8,4 +8,5 @@ import com.SocialApp.SimpleSocialApp.entities.Comments;
 @Repository
 public interface CommentsRepository  extends CrudRepository<Comments, Long>{
 
+    
 }
