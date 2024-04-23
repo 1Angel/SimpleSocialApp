@@ -5,12 +5,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "users")
@@ -26,21 +31,28 @@ public class User {
 
     private String password;
 
-    private Set<Roles> roles;
+    @ManyToMany
+    @JoinTable(
+        name = "users_roles",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="role_id"),
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})}
+    )
+    private List<Roles> roles;
 
     @CreationTimestamp
     private Date createdDate;
 
-    public User() {
-    }
-
-    public User(Long id, String username, String email, String password, Set<Roles> roles, Date createdDate) {
+    public User(Long id, String username, String email, String password, List<Roles> roles, Date createdDate) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
         this.createdDate = createdDate;
+    }
+
+    public User() {
     }
 
     public Long getId() {
@@ -75,11 +87,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Roles> getRoles() {
+    public List<Roles> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Roles> roles) {
+    public void setRoles(List<Roles> roles) {
         this.roles = roles;
     }
 
@@ -90,6 +102,7 @@ public class User {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
 
 
 

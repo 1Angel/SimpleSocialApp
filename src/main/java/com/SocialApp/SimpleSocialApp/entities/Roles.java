@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +19,8 @@ public class Roles {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Column(unique = true)
     private String name;
-
-    private List<User> users;
 
     @CreationTimestamp
     private Date createdDate;
@@ -27,10 +28,9 @@ public class Roles {
     public Roles() {
     }
 
-    public Roles(Long id, String name, List<User> users, Date createdDate) {
+    public Roles(Long id, String name, Date createdDate) {
         Id = id;
         this.name = name;
-        this.users = users;
         this.createdDate = createdDate;
     }
 
@@ -50,14 +50,6 @@ public class Roles {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -65,5 +57,7 @@ public class Roles {
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+
 
 }
