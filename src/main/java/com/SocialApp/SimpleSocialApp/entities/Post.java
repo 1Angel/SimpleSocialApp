@@ -4,7 +4,7 @@ import java.util.Date;
 
 import java.util.Set;
 
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -32,11 +32,12 @@ public class Post {
     @Column(length = 1000)
     private String description;
 
+
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"post"})
     private Set<Comments> comments;
 
-    @CreatedDate
+    @CreationTimestamp
     private Date createdAt;
 
 

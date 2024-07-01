@@ -28,6 +28,7 @@ public class Comments {
     @JsonIgnoreProperties({"comments"})
     private Post post;
 
+
     @CreatedDate
     private Date createdDate;
 
