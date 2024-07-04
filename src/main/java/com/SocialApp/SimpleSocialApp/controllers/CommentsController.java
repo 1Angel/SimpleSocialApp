@@ -2,6 +2,7 @@ package com.SocialApp.SimpleSocialApp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,5 +24,13 @@ public class CommentsController {
     public ResponseEntity<Comments> Create(@RequestBody Comments comments, @PathVariable("postId") Long postId){
         Comments comment = commentService.Create(comments, postId);
         return ResponseEntity.ok().body(comment);
+    }
+
+
+    @DeleteMapping("/delete/{commentId}/comment")
+    public ResponseEntity<?> Delete(@PathVariable("commentId") Long commentId){
+        commentService.Delete(commentId);
+        return ResponseEntity.ok().body(null);
+
     }
 }

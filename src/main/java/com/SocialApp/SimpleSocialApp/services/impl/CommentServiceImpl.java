@@ -33,4 +33,14 @@ public class CommentServiceImpl implements CommentService{
         return create;
     }
 
+    @Override
+    public void Delete(Long commentId) {
+        
+        Comments comment = commentsRepository.findById(commentId).get();
+        if(comment != null){
+            commentsRepository.delete(comment);
+        }
+
+    }
+
 }
