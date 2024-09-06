@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -32,6 +33,8 @@ public class Post {
     @Column(length = 1000)
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnoreProperties({"post"})
@@ -40,12 +43,11 @@ public class Post {
     @CreationTimestamp
     private Date createdAt;
 
-
-    
-    public Post(Long id, String title, String description, Set<Comments> comments, Date createdAt) {
+    public Post(Long id, String title, String description, User user, Set<Comments> comments, Date createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.user = user;
         this.comments = comments;
         this.createdAt = createdAt;
     }
@@ -77,6 +79,14 @@ public class Post {
         this.description = description;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Set<Comments> getComments() {
         return comments;
     }
@@ -94,6 +104,7 @@ public class Post {
     }
 
 
+    
 
 
 }

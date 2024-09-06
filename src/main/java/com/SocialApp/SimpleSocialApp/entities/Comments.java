@@ -25,6 +25,9 @@ public class Comments {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"comments"})
     private Post post;
 
@@ -32,45 +35,68 @@ public class Comments {
     @CreatedDate
     private Date createdDate;
 
-    public Comments(Long id, String description, Post post, Date createdDate) {
+
+    public Comments(Long id, String description, User user, Post post, Date createdDate) {
         this.id = id;
         this.description = description;
+        this.user = user;
         this.post = post;
         this.createdDate = createdDate;
     }
 
+
     public Comments() {
     }
+
 
     public Long getId() {
         return id;
     }
 
+
     public void setId(Long id) {
         this.id = id;
     }
+
 
     public String getDescription() {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
     }
+
+
+    public User getUser() {
+        return user;
+    }
+
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     public Post getPost() {
         return post;
     }
 
+
     public void setPost(Post post) {
         this.post = post;
     }
+
 
     public Date getCreatedDate() {
         return createdDate;
     }
 
+
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
+
+
 }
