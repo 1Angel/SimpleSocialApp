@@ -1,6 +1,7 @@
 package com.SocialApp.SimpleSocialApp.entities;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +13,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity(name = "users")
 public class User {
@@ -33,17 +38,27 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Comments> comments;
 
+    @ManyToMany
+    @JoinTable(
+        name = "user_roles",
+        joinColumns = @JoinColumn(name = "user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"),
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_id"})}
+    )
+    private List<Role> roles;
+
     @CreationTimestamp
     private Date CreatedAt;
 
     public User(Long id, String username, String email, String password, Set<Post> posts, Set<Comments> comments,
-            Date createdAt) {
+            List<Role> roles, Date createdAt) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.posts = posts;
         this.comments = comments;
+        this.roles = roles;
         CreatedAt = createdAt;
     }
 
@@ -98,6 +113,14 @@ public class User {
         this.comments = comments;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     public Date getCreatedAt() {
         return CreatedAt;
     }
@@ -105,5 +128,7 @@ public class User {
     public void setCreatedAt(Date createdAt) {
         CreatedAt = createdAt;
     }
+
+
 
 }
